@@ -1,8 +1,4 @@
 defmodule ExBanking.RequestLimit do
-  @moduledoc """
-  Handles user requests with auto sweeping ability
-  """
-
   use GenServer
   require Logger
 
@@ -23,7 +19,6 @@ defmodule ExBanking.RequestLimit do
 
   @impl true
   def handle_info(:sweep, state) do
-    Logger.debug("Sweeping requests")
     schedule_sweep()
     {:noreply, %{state | requests: %{}}}
   end
