@@ -1,12 +1,14 @@
 defmodule ExBanking.Accounts do
   @moduledoc """
-  Documentation for Accounts Context
+  Documentation to manage the account
   """
 
   alias ExBanking.Accounts.User
   alias ExBanking.Accounts.Manager
 
-  @doc false
+  @doc """
+  Create the user account
+  """
   @spec create_account(user :: String.t()) :: {:ok, %User{}} | {:error, :user_already_exists}
   def create_account(user) do
     case start_account(user) do
@@ -18,13 +20,17 @@ defmodule ExBanking.Accounts do
     end
   end
 
-  @doc false
+  @doc """
+  Update the user account
+  """
   @spec update_account(user :: String.t(), account :: %User{}) :: {:ok}
   def update_account(user, account) do
     Manager.store_changes(user, account)
   end
 
-  @doc false
+  @doc """
+  Ger the user
+  """
   @spec get_user_account(user :: String.t()) :: {:error, :user_does_not_exist} | {:ok, %User{}}
   def get_user_account(user) do
     if account_exists?(user) do

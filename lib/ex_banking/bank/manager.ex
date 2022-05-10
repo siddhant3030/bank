@@ -1,11 +1,14 @@
 defmodule ExBanking.Accounts.Manager do
   @moduledoc """
-  Provides functionality to manage user account
+  We use the registry to store the user
+
+
+  Each entry in the registry is associated to the process that has registered the key.
+  If the process crashes, the keys associated to that process are automatically removed.
+  All key comparisons in the registry are done using the match operation
   """
 
   use GenServer
-  require Logger
-
   alias ExBanking.Accounts.User
 
   @timeout :infinity

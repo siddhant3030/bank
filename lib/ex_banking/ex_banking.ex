@@ -1,8 +1,27 @@
 defmodule ExBanking do
-  @moduledoc """
-  Documentation for `ExBanking`.
-  """
 
+# Requirements for public functions provided by ExBanking module. Any function should return success result or error result.
+
+# @spec create_user(user :: String.t) :: :ok | {:error, :wrong_arguments | :user_already_exists}
+
+# Function creates new user in the system
+# New user has zero balance of any currency
+# @spec deposit(user :: String.t, amount :: number, currency :: String.t) :: {:ok, new_balance :: number} | {:error, :wrong_arguments | :user_does_not_exist | :too_many_requests_to_user}
+
+# Increases user’s balance in given currency by amount value
+# Returns new_balance of the user in given format
+# @spec withdraw(user :: String.t, amount :: number, currency :: String.t) :: {:ok, new_balance :: number} | {:error, :wrong_arguments | :user_does_not_exist | :not_enough_money | :too_many_requests_to_user}
+
+# Decreases user’s balance in given currency by amount value
+# Returns new_balance of the user in given format
+# @spec get_balance(user :: String.t, currency :: String.t) :: {:ok, balance :: number} | {:error, :wrong_arguments | :user_does_not_exist | :too_many_requests_to_user}
+
+# Returns balance of the user in given format
+# @spec send(from_user :: String.t, to_user :: String.t, amount :: number, currency :: String.t) :: {:ok, from_user_balance :: number, to_user_balance :: number} | {:error, :wrong_arguments | :not_enough_money | :sender_does_not_exist | :receiver_does_not_exist | :too_many_requests_to_sender | :too_many_requests_to_receiver}
+
+# Decreases from_user’s balance in given currency by amount value
+# Increases to_user’s balance in given currency by amount value
+# Returns balance of from_user and to_user in given format
   alias ExBanking.Accounts
   alias ExBanking.Accounts.User
   alias ExBanking.RequestLimit
@@ -36,10 +55,8 @@ defmodule ExBanking do
         (balance + format_amount(amount))
         |> format_amount()
 
-      # Add or update existing currency amount
       currencies = Map.put(currencies, currency, new_balance)
 
-      # Update user account
       account = %User{currencies: currencies}
       Accounts.update_account(user, account)
 
@@ -75,10 +92,8 @@ defmodule ExBanking do
           (blanace - format_amount(amount))
           |> format_amount()
 
-        # Update existing currency amount
         currencies = Map.put(currencies, currency, new_balance)
 
-        # Update user account
         account = %User{currencies: currencies}
         Accounts.update_account(user, account)
 
